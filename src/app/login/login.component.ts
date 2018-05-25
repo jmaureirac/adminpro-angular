@@ -53,8 +53,8 @@ export class LoginComponent implements OnInit {
       auth2.attachClickHandler( element, {}, (googleUser) => {
         let token = googleUser.getAuthResponse().id_token;
         this._usuarioService.loginGoogle(token)
-          .subscribe( () => this.router.navigate(['/dashboard']));
-          // .subscribe( () => window.location.href = '#/dashboard');   EN CASO DE ENTRAR CON DASHBOARD BUG
+          .subscribe( () => window.location.href = '#/dashboard');   //EN CASO DE ENTRAR CON DASHBOARD BUG
+          // .subscribe( () => this.router.navigate(['/dashboard']));
       });
     });
   }
