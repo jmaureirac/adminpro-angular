@@ -9,6 +9,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 
+import swal from 'sweetalert';
+
 
 @Injectable()
 export class UsuarioService {
@@ -25,6 +27,22 @@ export class UsuarioService {
     this.getStorage();
   }
 
+  renuevaToken() {
+    let url = URL_SERVICIOS + '/login/renuevatoken?token=' + this.token;
+
+    return this._http.get(url)
+      .map( (res: any) => {
+        this.token = res.token;
+        localStorage.setItem('token', this.token);
+        return true;
+      })
+      .catch( err => {
+        swal('Error', 'No fue posible renovar token', 'error');
+        this.router.navigate(['/login']);
+        return Observable.throw(err);
+      });
+
+  }
 
   getStorage() {
     if ( localStorage.getItem('token') ) {
